@@ -19,13 +19,13 @@ SetEnv walldir $[FVWM_USERDIR]/images/pictures/desktop
 DeskTopSize 3x1
 DesktopName 0 Main
 DesktopName 1 Mikasa
-EdgeScroll 100 100
+EdgeScroll 150 150
 EdgeResistance 150  150
 EdgeThickness 1
 ClickTime 350
 MoveThreshold 3
 Style * ClickToFocus, MouseFocusClickRaises
-EwmhBaseStruts 0 0 0 126
+EwmhBaseStruts 0 0 0 60
 IgnoreModifiers L25
 OpaqueMoveSize unlimited
 
@@ -33,7 +33,7 @@ OpaqueMoveSize unlimited
 
 DestroyFunc InitFunction
 AddToFunc   InitFunction
-#+ I Exec exec fvwm-root -r $[walldir]/gou.png
++ I Exec exec fvwm-root -r $[walldir]/gou.png
 + I Exec feh --bg-scale $[walldir]/gou.png
 + I Exec exec xcompmgr -Ss -n -Cc -fF -I-10 -O-10 -D1 -t-3 -l-4 -r4
 + I Exec exec fcitx
@@ -47,21 +47,21 @@ AddToFunc StartFunction
 + I Module FvwmPager *
 #+ I Module FvwmIconMan
 + I Module FvwmEvent
-#+ I Module FvwmCommandS
-#+ I Module FvwmButtons FvwmDock
-#+ I Test (Restart) All (Iconic) PlaceAgain Icon
++ I Module FvwmCommandS
++ I Module FvwmButtons FvwmDock
++ I Test (Restart) All (Iconic) PlaceAgain Icon
 
 DestroyFunc ExitFunction
 AddToFunc ExitFunction
-#+ I Exec rm $[FVWM_USERDIR]/images/icontmp/icon.tmp*
-#+ I Exec rm $[FVWM_USERDIR]/images/icontmp/miniicon.tmp*
-#+ I test (!torestart) Exec 3ddesk --stop
++ I Exec rm $[FVWM_USERDIR]/images/icontmp/icon.tmp*
++ I Exec rm $[FVWM_USERDIR]/images/icontmp/miniicon.tmp*
++ I test (!torestart) Exec 3ddesk --stop
 
 #================ Style ================
 
-Style * Font "StringEncoding=UTF-8:xft:WenQuanYi Micro Hei:size=10"
-#Style * IconBox 100x0+40-40, IconGrid 20 20, IconFill right bottom, IconSize 64 64
-#Style * IconBox $[vp.width]x$[vp.height]+10+40, IconFill t l, IconBackgroundPadding 1, IconBackgroundRelief 0
+Style * Font "StringEncoding=UTF-8:xft:文泉驿等宽微米黑:size=16"
+Style * IconBox 100x0+40-40, IconGrid 20 20, IconFill right bottom, IconSize 64 64
+Style * IconBox $[vp.width]x$[vp.height]+10+40, IconFill t l, IconBackgroundPadding 1, IconBackgroundRelief 0
 Style * !EWMHMiniIconOverride, IconOverride, NoIconTitle
 Style * DecorateTransient, UseDecor WindowDecoration, !StickyStippledTitle, IndexedWindowName
 Style * MinOverlapPlacement
@@ -92,7 +92,8 @@ Style * !Title
 MenuStyle * MenuColorset 33, HilightBack, ActiveColorset 34
 MenuStyle * BorderWidth 0, HilightBack, ActiveFore
 MenuStyle * Hilight3DThickness 0, Animation
-MenuStyle * Font "StringEncoding=UTF-8:xft:Comic Sans MS:size=10"
+#MenuStyle * Font "StringEncoding=UTF-8:xft:Comic Sans MS:size=10"
+MenuStyle * Font "StringEncoding=UTF-8:xft:文泉驿等宽微米黑:size=12"
 #MenuStyle * PopupImmediately, PopdownImmediately, PopupOffset 0 100
 MenuStyle * TitleUnderlines0, TrianglesSolid
 MenuStyle * ItemFormat "%s%|%5.i%5.5l%5.5r%.5>%|%i"
@@ -239,11 +240,13 @@ DestroyModuleConfig FvwmIconMan
 DestroyMenu MenuFvwmRoot
 AddToMenu MenuFvwmRoot
 +   *$[FVWM_USERDIR]/images/menu/menu_up.png* Title
-+   Terminal%terminal.png%              Exec terminator
++   Terminal%terminal.png%              Exec sakura 
+# terminator
 +   "File Manager"%folder.png%          Exec thunar
 +   "Run.."%run.png%                    None (*run) Exec dmenu_run
 +   ""                                  Nop
-+   "Xlock"%lock.png%                   Exec xlock
++   "Xlock"%lock.png%                   Exec xlock -nice 19 +use3d
++   "Sleep"%lock.png%                   Exec sudo pm-suspend & xlock -nice 19 +use3d
 +   "Restart Fvwm"%restart.png%         Restart
 +   "Quit"%quit.png%                    Quit
 +   *$[FVWM_USERDIR]/images/menu/menu_down.png* Title
@@ -254,6 +257,11 @@ AddToFunc   StartFunction  I   FvwmBacker
 *FvwmBacker:Command(Desk 1,Page 0 0) Exec feh --bg-scale $[walldir]/1.jpg
 *FvwmBacker:Command(Desk 1,Page 1 0) Exec feh --bg-scale $[walldir]/2.jpg
 *FvwmBacker:Command(Desk 1,Page 2 0) Exec feh --bg-scale $[walldir]/3.jpg
+
+#============== Fvwm Animate ============
+*FvwmAnimate: Delay 25
+*FvwmAnimate: Effect Random
+*FvwmAnimate: Width 3
 
 #============== FvwmEvent ===============
 
@@ -291,18 +299,20 @@ AddToFunc Mikasa
 
 #================ Mouse ================
 
+Mouse 1       R       A
+Mouse 3	      R       A   Menu MenuFvwmRoot
 Mouse 1       W       M   MoveFunc
 
 #============== Keyboard ===============
 
-Key F2       A       M       Exec dmenu_run
-Key F12      A       A       Exec terminator
-Key E        A       4       Exec sakura
-Key E        A       M       Close
+Key  F2       A       A       Exec dmenu_run
+#Key F12      A       A       Exec terminator
+Key R        A       4       Exec sakura
+Key F4        A       M       Close
 Key Q        A       M       Iconify
 Key W        A       M       Maximize
-Key Tab      A       4       Mikasa
-Key Tab      A       M       WindowList Root c c NoCurrentDeskTitle
+#Key Tab      A       4       Mikasa
+#Key Tab      A       M       WindowList Root c c NoCurrentDeskTitle
 Key 1        A       M       MoveToPage 0 0
 Key 2        A       M       MoveToPage 1 0
 Key 3        A       M       MoveToPage 2 0
@@ -310,9 +320,21 @@ Key Up       A       M       GoToPage wrapx  1p 1
 Key Down     A       M       GoToPage wrapx  1p 1
 Key Q        A       4       Exec thunar
 Key W        A       4       Exec firefox
-Key P        A       C       Exec exec scrot -e 'mv $f Picture'
-#Key P        A       4       Exec exec scrot -s -e 'mv $f Picture'
-Key S        A       M       FvwmRearrange -tile -u -mn 2 -resize -m 0 0 100 84
+Key G        A       M       Exec google-chrome
+Key L        A       CM       Exec xlock -nice 19 +use3d
+Key S        A       CM       Exec sudo pm-suspend & xlock -nice 19 +use3d
+#firefox
+#Key P        A       CM       Exec exec scrot -e 'mv $f 图片'
+Key P        A       4       Exec exec scrot -s -e 'mv $f 图片'
+Key S        A       M       FvwmRearrange -tile -u -mn 2 -resize -m 0 0 100 92
+Key D        A       4       All (AcceptsFocus CurrentPage !Iconic !Shaded) Iconify
+Key E        A       M       Exec bash -c 'LD_PRELOAD=/usr/lib/libsublime-imfix.so /opt/sublime_text/sublime_text' -n
+
+Key Super_L  A       A       Exec dmenu_ru
+
+Key F3 A A Module FvwmConsole -terminal rxvt -geometry 45x5-0+0 \
+	-bg gold -fg midnightblue \
+	-fn "-adobe-courier-medium-r-*-*-14-*-*-*-*-*-*-*"
 
 Key XF86AudioMute A A Exec exec amixer set Master toggle
 Key XF86AudioLowerVolume A A Exec exec amixer set Master 2%-
