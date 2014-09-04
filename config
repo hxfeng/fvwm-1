@@ -320,7 +320,7 @@ Key 3        A       M       MoveToPage 2 0
 Key Up       A       M       GoToPage wrapx  1p 1
 Key Down     A       M       GoToPage wrapx  1p 1
 Key E        A       4       Exec thunar
-Key Q        A       4       Quit
+Key Q        A       4       Exec  google-chrome --user-data-dir --app="http://web2.qq.com/webqq.html" -l -t 5 -s -st
 #Key W        A       4       Exec firefox
 Key G        A       M       Exec google-chrome
 Key L        A       CM       Exec xlock -nice 19 +use3d
