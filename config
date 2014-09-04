@@ -38,7 +38,8 @@ AddToFunc   InitFunction
 + I Exec exec xcompmgr -Ss -n -Cc -fF -I-10 -O-10 -D1 -t-3 -l-4 -r4
 + I Exec exec fcitx
 + I Exec exec conky
-+ I Exec exec tilda
++ I Exec exec thunar --daemon
+#+ I Exec exec tilda
 
 DestroyFunc StartFunction
 AddToFunc StartFunction
@@ -318,19 +319,22 @@ Key 2        A       M       MoveToPage 1 0
 Key 3        A       M       MoveToPage 2 0
 Key Up       A       M       GoToPage wrapx  1p 1
 Key Down     A       M       GoToPage wrapx  1p 1
-Key Q        A       4       Exec thunar
-Key W        A       4       Exec firefox
+Key E        A       4       Exec thunar
+Key Q        A       4       Quit
+#Key W        A       4       Exec firefox
 Key G        A       M       Exec google-chrome
 Key L        A       CM       Exec xlock -nice 19 +use3d
 Key S        A       CM       Exec sudo pm-suspend & xlock -nice 19 +use3d
 #firefox
 #Key P        A       CM       Exec exec scrot -e 'mv $f 图片'
-Key P        A       4       Exec exec scrot -s -e 'mv $f 图片'
+Key P        A       4       Exec exec scrot -e 'mv $f ~/图片/'
 Key S        A       M       FvwmRearrange -tile -u -mn 2 -resize -m 0 0 100 92
 Key D        A       4       All (AcceptsFocus CurrentPage !Iconic !Shaded) Iconify
 Key E        A       M       Exec bash -c 'LD_PRELOAD=/usr/lib/libsublime-imfix.so /opt/sublime_text/sublime_text' -n
 
-Key Super_L  A       A       Exec dmenu_ru
+Mouse 0 4 A Maximize 0 grow
+
+#Key Super_L  A       A       Exec dmenu_ru
 
 Key F3 A A Module FvwmConsole -terminal rxvt -geometry 45x5-0+0 \
 	-bg gold -fg midnightblue \
